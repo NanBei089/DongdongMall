@@ -1,0 +1,39 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: shop-gateway-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+    gateway:
+      server:
+        webflux:
+          globalcors: # 全局的跨域处理
+            add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
+            cors-configurations:
+              '[/**]':
+                allowed-origin-patterns: # 允许哪些网站的跨域请求
+                  - "*"
+                allowed-methods: # 允许的跨域ajax的请求方式
+                  - "GET"
+                  - "POST"
+                  - "DELETE"
+                  - "PUT"
+                  - "PATCH"
+                  - "OPTIONS"
+                allowedHeaders: # 允许在请求中携带的头信息
+                  - "*"
+                allow-credentials: true # 是否允许携带cookie
+                max-age: 360000 # 这次跨域检测的有效期
+          # 是否和服务注册与发现组件结合，设置为 true 后可以直接使用应用名称调用服务
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true # 服务名称转成小写
+          routes:
+            - id: shop-goods-service
+              uri: lb://shop-goods-service # 路由的目标地址 lb就是负载均衡，后面跟服务名称
+              predicates:
+                - Path=/brand/**

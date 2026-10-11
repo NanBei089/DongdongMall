@@ -1,0 +1,23 @@
+server:
+  port: 8081
+spring:
+  cloud:
+    nacos:
+      discovery:  # 注册中心
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+  application:
+    name: shop-goods-service
+  profiles:
+    active: dev
+  datasource:
+    password: ${DB_PASSWORD:}
+    username: ${DB_USERNAME:root}
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/dongdongmall?characterEncoding=UTF-8}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource  # 指定我使用的链接池
+mybatis:
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    #开启驼峰命名转换
+    map-underscore-to-camel-case: true
