@@ -11,14 +11,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Brand {
 
-    private Long id;
+    private Long brandId;
 
     // 品牌名称
-    private String name;
+    private String brandName;
 
     // 品牌首字母
-    private String firstChar;
+    private String brandFirstChar;
 }

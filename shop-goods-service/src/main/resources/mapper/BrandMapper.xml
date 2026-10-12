@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nanbei.goods.mapper.BrandMapper">
+    <resultMap id="brandResultMap" type="com.nanbei.pojo.Brand">
+        <id property="brandId" column="id"/>
+        <result property="brandName" column="name"/>
+        <result property="brandFirstChar" column="first_char"/>
+    </resultMap>
+
+    <!-- 添加品牌 -->
+    <insert id="insertBrand" useGeneratedKeys="true"
+            keyProperty="brandId" keyColumn="id">
+        insert into tb_brand (name, first_char)
+        values (#{brandName}, #{brandFirstChar})
+    </insert>
+
+    <!-- 查询所有品牌 -->
+    <select id="selectAllBrand" resultMap="brandResultMap">
+        select * from tb_brand
+
+    </select>
+
+    <!-- 根据id查询 -->
+    <select id="selectBrandById" resultMap="brandResultMap">
+        select * from tb_brand where id = #{id}
+    </select>
+
+    <!-- 修改 -->
+    <update id="updateBrand">
+        update tb_brand
+        set name = #{brandName}, first_char = #{brandFirstChar}
+        where id = #{brandId}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="deleteBrand">
+        delete from tb_brand where id = #{id}
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="deleteBatchBrand">
+        delete from tb_brand where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>
