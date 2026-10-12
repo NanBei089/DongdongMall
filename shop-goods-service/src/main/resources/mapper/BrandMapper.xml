@@ -31,7 +31,7 @@
                 name like concat('%', #{brand.brandName}, '%')
             </if>
             <if test="brand != null and brand.brandFirstChar != null and brand.brandFirstChar != ''">
-                and first_char = #{brand.brandFirstChar}
+                and first_char like concat('%', #{brand.brandFirstChar}, '%')
             </if>
         </where>
         order by id

@@ -21,3 +21,8 @@ mybatis:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
     #开启驼峰命名转换
     map-underscore-to-camel-case: true
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs

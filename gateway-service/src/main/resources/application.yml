@@ -37,3 +37,23 @@ spring:
               uri: lb://shop-goods-service # 路由的目标地址 lb就是负载均衡，后面跟服务名称
               predicates:
                 - Path=/brand/**
+            - id: shop-goods-api-docs
+              uri: lb://shop-goods-service
+              predicates:
+                - Path=/shop-goods-service/v3/api-docs,/shop-goods-service/v3/api-docs/**
+              filters:
+                - StripPrefix=1
+
+springdoc:
+  api-docs:
+    enabled: true
+
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+    urls:
+      - name: 商品服务
+        url: /shop-goods-service/v3/api-docs
+
+    urls-primary-name: 商品服务

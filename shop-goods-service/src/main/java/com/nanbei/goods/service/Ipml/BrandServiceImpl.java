@@ -42,7 +42,7 @@ public class BrandServiceImpl implements BrandService {
      * @param id
      */
     @Override
-    public Brand selectBrandById(int id) {
+    public Brand selectBrandById(Long id) {
         return brandMapper.selectBrandById(id);
     }
 
@@ -62,7 +62,7 @@ public class BrandServiceImpl implements BrandService {
      * @param id
      */
     @Override
-    public void deleteBrand(int id) {
+    public void deleteBrand(Long id) {
         brandMapper.deleteBrand(id);
     }
 
@@ -81,8 +81,6 @@ public class BrandServiceImpl implements BrandService {
      * 使用pagehelper
      * 1.设置分页参数
      * 2.查询分页数据
-     * 3.获取总条数
-     * 4.返回PageList
      * @param params
      */
     @Override
@@ -91,6 +89,9 @@ public class BrandServiceImpl implements BrandService {
         PageHelper.startPage(params.getPageNum(), params.getPageSize());
         //2.查询分页数据
         List<Brand> list = brandMapper.selectBrandByPage(params.getParams());
+        //3.获取分页信息
+        PageInfo<Brand> pageInfo = new PageInfo<>(list);
+        //4.转换数据结构
         List<BrandVo> brandRows = list.stream().map(brand ->
                 new BrandVo(brand.getBrandId(),
                         brand.getBrandName(),
@@ -98,9 +99,6 @@ public class BrandServiceImpl implements BrandService {
                 )
         ).toList();
 
-        //3.获取总条数
-        PageInfo<BrandVo> pageInfo = new PageInfo<>(brandRows);
-        //4.返回PageList
         return new PageList<>(pageInfo.getTotal(), brandRows);
     }
 }

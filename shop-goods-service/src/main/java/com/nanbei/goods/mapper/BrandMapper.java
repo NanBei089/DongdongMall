@@ -20,7 +20,7 @@ public interface BrandMapper {
     /**
      * 根据品牌id查询品牌
      */
-    Brand selectBrandById(int id);
+    Brand selectBrandById(Long id);
 
     /**
      * 修改品牌
@@ -30,7 +30,7 @@ public interface BrandMapper {
     /**
      * 删除品牌
      */
-    void deleteBrand(int id);
+    void deleteBrand(Long id);
 
     /**
      * 批量删除品牌
