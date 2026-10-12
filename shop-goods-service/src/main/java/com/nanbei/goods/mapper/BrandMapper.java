@@ -36,4 +36,9 @@ public interface BrandMapper {
      * 批量删除品牌
      */
     void deleteBatchBrand(@Param("ids") List<Long> ids);
+
+    /**
+     * 分页查询品牌，条件为空时查询全部。
+     */
+    List<Brand> selectBrandByPage(@Param("brand") Brand brand);
 }

@@ -23,6 +23,20 @@
 
     </select>
 
+    <!-- 分页查询 -->
+    <select id="selectBrandByPage" resultMap="brandResultMap">
+        select * from tb_brand
+        <where>
+            <if test="brand != null and brand.brandName != null and brand.brandName != ''">
+                name like concat('%', #{brand.brandName}, '%')
+            </if>
+            <if test="brand != null and brand.brandFirstChar != null and brand.brandFirstChar != ''">
+                and first_char = #{brand.brandFirstChar}
+            </if>
+        </where>
+        order by id
+    </select>
+
     <!-- 根据id查询 -->
     <select id="selectBrandById" resultMap="brandResultMap">
         select * from tb_brand where id = #{id}

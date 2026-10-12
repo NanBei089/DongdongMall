@@ -1,6 +1,9 @@
 package com.nanbei.goods.service;
 
+import com.nanbei.page.PageList;
+import com.nanbei.page.PageQueryParams;
 import com.nanbei.pojo.Brand;
+import com.nanbei.vo.BrandVo;
 
 import java.util.List;
 
@@ -39,7 +42,7 @@ public interface BrandService {
     /**
      * 分页查询
      */
-    List<Brand> selectBrandByPage(int pageNum, int pageSize);
+    PageList<BrandVo> selectBrandByPage(PageQueryParams<Brand> params);
 
 
 }
