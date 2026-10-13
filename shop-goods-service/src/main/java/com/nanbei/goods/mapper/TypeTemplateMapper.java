@@ -3,23 +3,63 @@ package com.nanbei.goods.mapper;
 import com.nanbei.pojo.TypeTemplate;
 
 /**
-* @author nanbei
-* @description 针对表【tb_type_template(模板表)】的数据库操作Mapper
-* @createDate 2026-10-13 10:04:59
-* @Entity com.nanbei.goods.pojo.TypeTemplate
-*/
+ * 模板表数据库操作Mapper接口
+ *
+ * @author nanbei
+ * @description 针对表【tb_type_template】的数据库操作Mapper
+ * @createDate 2026-10-13 10:28:17
+ * @Entity com.nanbei.goods.pojo.TypeTemplate
+ */
 public interface TypeTemplateMapper {
 
+    /**
+     * 根据主键删除模板表
+     *
+     * @param id 主键ID
+     * @return 受影响的行数
+     */
     int deleteByPrimaryKey(Long id);
 
+    /**
+     * 新增模板表
+     *
+     * @param record 模板表实体对象
+     * @return 受影响的行数
+     */
     int insert(TypeTemplate record);
 
+    /**
+     * 选择性新增模板表
+     * 仅插入实体对象中非null的字段
+     *
+     * @param record 模板表实体对象
+     * @return 受影响的行数
+     */
     int insertSelective(TypeTemplate record);
 
+    /**
+     * 根据主键查询模板表
+     *
+     * @param id 主键ID
+     * @return 模板表实体对象，不存在时返回null
+     */
     TypeTemplate selectByPrimaryKey(Long id);
 
+    /**
+     * 根据主键选择性更新模板表
+     * 仅更新实体对象中非null的字段
+     *
+     * @param record 模板表实体对象
+     * @return 受影响的行数
+     */
     int updateByPrimaryKeySelective(TypeTemplate record);
 
+    /**
+     * 根据主键更新模板表
+     *
+     * @param record 模板表实体对象
+     * @return 受影响的行数
+     */
     int updateByPrimaryKey(TypeTemplate record);
 
 }
