@@ -3,58 +3,62 @@ package com.nanbei.goods.mapper;
 import com.nanbei.pojo.Specification;
 
 /**
-* @author nanbei
-* @description 针对表【tb_specification(规格表)】的数据库操作Mapper
-* @createDate 2026-10-13 09:58:10
-* @Entity com.nanbei.goods.pojo.Specification
-*/
+ * 规格表数据库操作Mapper接口
+ *
+ * @author nanbei
+ * @description 针对表【tb_specification】的数据库操作Mapper
+ * @createDate 2026-10-13 10:28:17
+ * @Entity com.nanbei.goods.pojo.Specification
+ */
 public interface SpecificationMapper {
 
     /**
-     * 根据主键删除
+     * 根据主键删除规格表
      *
-     * @param id 主键
-     * @return 影响行数
+     * @param id 主键ID
+     * @return 受影响的行数
      */
     int deleteByPrimaryKey(Long id);
 
     /**
-     * 插入数据
+     * 新增规格表
      *
-     * @param record 数据对象
-     * @return 影响行数
+     * @param record 规格表实体对象
+     * @return 受影响的行数
      */
     int insert(Specification record);
 
     /**
-     * 插入数据（字段值为空也会插入）
+     * 选择性新增规格表
+     * 仅插入实体对象中非null的字段
      *
-     * @param record 数据对象
-     * @return 影响行数
+     * @param record 规格表实体对象
+     * @return 受影响的行数
      */
     int insertSelective(Specification record);
 
     /**
-     * 根据主键查询
+     * 根据主键查询规格表
      *
-     * @param id 主键
-     * @return 数据对象
+     * @param id 主键ID
+     * @return 规格表实体对象，不存在时返回null
      */
     Specification selectByPrimaryKey(Long id);
 
     /**
-     * 根据主键更新数据（字段值为空不会更新）
+     * 根据主键选择性更新规格表
+     * 仅更新实体对象中非null的字段
      *
-     * @param record 数据对象
-     * @return 影响行数
+     * @param record 规格表实体对象
+     * @return 受影响的行数
      */
     int updateByPrimaryKeySelective(Specification record);
 
     /**
-     * 根据主键更新数据
+     * 根据主键更新规格表
      *
-     * @param record 数据对象
-     * @return 影响行数
+     * @param record 规格表实体对象
+     * @return 受影响的行数
      */
     int updateByPrimaryKey(Specification record);
 

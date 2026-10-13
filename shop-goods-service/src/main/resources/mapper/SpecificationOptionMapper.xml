@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanbei.goods.mapper.SpecificationOptionMapper">
 
-    <resultMap id="BaseResultMap" type="com.nanbei.pojo.SpecificationOption">
+    <resultMap id="BaseResultMap" type="com.nanbei.goods.pojo.SpecificationOption">
             <id property="id" column="id" />
             <result property="optionName" column="option_name" />
             <result property="specId" column="spec_id" />
@@ -26,12 +26,12 @@
         delete from tb_specification_option
         where  id = #{id} 
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.nanbei.pojo.SpecificationOption" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.nanbei.goods.pojo.SpecificationOption" useGeneratedKeys="true">
         insert into tb_specification_option
         ( id,option_name,spec_id,orders)
         values (#{id},#{optionName},#{specId},#{orders})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.nanbei.pojo.SpecificationOption" useGeneratedKeys="true">
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.nanbei.goods.pojo.SpecificationOption" useGeneratedKeys="true">
         insert into tb_specification_option
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="id != null">id,</if>
@@ -46,7 +46,7 @@
                 <if test="orders != null">#{orders},</if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.nanbei.pojo.SpecificationOption">
+    <update id="updateByPrimaryKeySelective" parameterType="com.nanbei.goods.pojo.SpecificationOption">
         update tb_specification_option
         <set>
                 <if test="optionName != null">
@@ -61,7 +61,7 @@
         </set>
         where   id = #{id} 
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.nanbei.pojo.SpecificationOption">
+    <update id="updateByPrimaryKey" parameterType="com.nanbei.goods.pojo.SpecificationOption">
         update tb_specification_option
         set 
             option_name =  #{optionName},
