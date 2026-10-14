@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanbei.goods.mapper.SpecificationOptionMapper">
 
-    <resultMap id="BaseResultMap" type="com.nanbei.goods.pojo.SpecificationOption">
+    <resultMap id="BaseResultMap" type="com.nanbei.pojo.SpecificationOption">
             <id property="id" column="id" />
             <result property="optionName" column="option_name" />
             <result property="specId" column="spec_id" />
@@ -15,6 +15,11 @@
         id,option_name,spec_id,orders
     </sql>
 
+    <!--根据spec_id删除-->
+    <delete id="deleteBySpecId" parameterType="java.lang.Long">
+        delete from tb_specification_option where spec_id = #{specId}
+    </delete>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
@@ -22,16 +27,37 @@
         where  id = #{id} 
     </select>
 
+    <select id="selectBySpecId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_specification_option
+        where spec_id = #{specId}
+        order by orders, id
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from tb_specification_option
         where  id = #{id} 
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.nanbei.goods.pojo.SpecificationOption" useGeneratedKeys="true">
+
+<!--    批量删除-->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from tb_specification_option where spec_id in
+        <foreach item="spec_id" collection="ids" open="(" close=")" separator=",">
+            #{spec_id}
+        </foreach>
+    </delete>
+
+    <insert id="insertOption" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
         insert into tb_specification_option
-        ( id,option_name,spec_id,orders)
-        values (#{id},#{optionName},#{specId},#{orders})
+        (option_name, spec_id, orders)
+        values
+        <foreach collection="record" item="item" separator=",">
+            (#{item.optionName}, #{item.specId}, #{item.orders})
+        </foreach>
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.nanbei.goods.pojo.SpecificationOption" useGeneratedKeys="true">
+
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.nanbei.pojo.SpecificationOption" useGeneratedKeys="true">
         insert into tb_specification_option
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="id != null">id,</if>
@@ -46,27 +72,29 @@
                 <if test="orders != null">#{orders},</if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.nanbei.goods.pojo.SpecificationOption">
-        update tb_specification_option
-        <set>
-                <if test="optionName != null">
-                    option_name = #{optionName},
+
+
+    <update id="updateOption" parameterType="java.util.List">
+        <foreach collection="record" item="item" separator=";">
+            update tb_specification_option
+            <set>
+                <if test="item.optionName != null">
+                    option_name = #{item.optionName},
                 </if>
-                <if test="specId != null">
-                    spec_id = #{specId},
+                <if test="item.orders != null">
+                    orders = #{item.orders},
                 </if>
-                <if test="orders != null">
-                    orders = #{orders},
-                </if>
-        </set>
-        where   id = #{id} 
+            </set>
+            where id = #{item.id}
+        </foreach>
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.nanbei.goods.pojo.SpecificationOption">
+
+
+    <update id="updateByPrimaryKey" parameterType="com.nanbei.pojo.SpecificationOption">
         update tb_specification_option
         set 
             option_name =  #{optionName},
-            spec_id =  #{specId},
             orders =  #{orders}
-        where   id = #{id} 
+        where   id = #{id} and spec_id = #{specId}
     </update>
 </mapper>

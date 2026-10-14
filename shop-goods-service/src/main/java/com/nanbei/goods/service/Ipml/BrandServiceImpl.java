@@ -29,24 +29,6 @@ public class BrandServiceImpl implements BrandService {
     }
 
     /**
-     * 查询所有品牌
-     */
-    @Override
-    public List<Brand> selectAllBrand() {
-        return brandMapper.selectAllBrand();
-    }
-
-    /**
-     * 根据品牌id查询品牌
-     *
-     * @param id
-     */
-    @Override
-    public Brand selectBrandById(Long id) {
-        return brandMapper.selectBrandById(id);
-    }
-
-    /**
      * 修改品牌
      *
      * @param brand
@@ -85,8 +67,14 @@ public class BrandServiceImpl implements BrandService {
      */
     @Override
     public PageList<BrandVo> selectBrandByPage(PageQueryParams<Brand> params) {
+        int pageNum = params.getPageNum();
+        int pageSize = params.getPageSize();
+        if (pageNum <= 0 || pageSize <= 0) {
+            pageNum = 1;
+            pageSize = 10;
+        }
         //1.设置分页参数
-        PageHelper.startPage(params.getPageNum(), params.getPageSize());
+        PageHelper.startPage(pageNum, pageSize);
         //2.查询分页数据
         List<Brand> list = brandMapper.selectBrandByPage(params.getParams());
         //3.获取分页信息

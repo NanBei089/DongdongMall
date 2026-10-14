@@ -1,6 +1,10 @@
 package com.nanbei.goods.mapper;
 
 import com.nanbei.pojo.Specification;
+import com.nanbei.vo.SpecificationVo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 规格表数据库操作Mapper接口
@@ -11,6 +15,13 @@ import com.nanbei.pojo.Specification;
  * @Entity com.nanbei.goods.pojo.Specification
  */
 public interface SpecificationMapper {
+
+    /**
+     * 分页查询规格表
+     * @param params 分页查询参数
+     * @return 规格表实体对象列表
+     */
+    List<Specification> selectList(SpecificationVo params);
 
     /**
      * 根据主键删除规格表
@@ -26,16 +37,7 @@ public interface SpecificationMapper {
      * @param record 规格表实体对象
      * @return 受影响的行数
      */
-    int insert(Specification record);
-
-    /**
-     * 选择性新增规格表
-     * 仅插入实体对象中非null的字段
-     *
-     * @param record 规格表实体对象
-     * @return 受影响的行数
-     */
-    int insertSelective(Specification record);
+    int insertSpecification(Specification record);
 
     /**
      * 根据主键查询规格表
@@ -62,4 +64,5 @@ public interface SpecificationMapper {
      */
     int updateByPrimaryKey(Specification record);
 
+    void deleteBatch(@Param("ids") List<Long> ids);
 }

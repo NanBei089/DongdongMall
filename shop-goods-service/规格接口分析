@@ -1,0 +1,11 @@
+1.分页和条件查询 --tb_spec表
+2.删除操作 -- 两个表 tb_spec tb_spec_option 加事务
+
+3.添加 tb_spec tb_spec_option
+  先添加tb_spec,返回自增的id
+  再添加tb_spec
+
+4.修改 tb_spec tb_spec_option
+  回显数据tb_spec和tb_spec_option
+  tb_spec修改
+  tb_spec_option增删改

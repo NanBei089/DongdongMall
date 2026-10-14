@@ -15,16 +15,6 @@ public interface BrandService {
     void insertBrand(Brand brand);
 
     /**
-     * 查询所有品牌
-     */
-    List<Brand> selectAllBrand();
-
-    /**
-     * 根据品牌id查询品牌
-     */
-    Brand selectBrandById(Long id);
-
-    /**
      * 修改品牌
      */
     void updateBrand(Brand brand);

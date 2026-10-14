@@ -1,6 +1,9 @@
 package com.nanbei.goods.mapper;
 
 import com.nanbei.pojo.SpecificationOption;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 规格选项表数据库操作Mapper接口
@@ -13,12 +16,18 @@ import com.nanbei.pojo.SpecificationOption;
 public interface SpecificationOptionMapper {
 
     /**
+     * 根据spec_id删除规格相关信息
+     * @param specId 规格ID
+     */
+    void deleteBySpecId(Long specId);
+
+    /**
      * 根据主键删除规格选项表
      *
      * @param id 主键ID
      * @return 受影响的行数
      */
-    int deleteByPrimaryKey(Long id);
+    void deleteByPrimaryKey(Long id);
 
     /**
      * 新增规格选项表
@@ -26,7 +35,7 @@ public interface SpecificationOptionMapper {
      * @param record 规格选项表实体对象
      * @return 受影响的行数
      */
-    int insert(SpecificationOption record);
+    void insertOption(@Param("record") List<SpecificationOption> record);
 
     /**
      * 选择性新增规格选项表
@@ -46,13 +55,21 @@ public interface SpecificationOptionMapper {
     SpecificationOption selectByPrimaryKey(Long id);
 
     /**
+     * 根据规格ID查询规格选项表
+     *
+     * @param specId 规格ID
+     * @return 规格选项表实体对象列表，不存在时返回空列表
+     */
+    List<SpecificationOption> selectBySpecId(Long specId);
+
+    /**
      * 根据主键选择性更新规格选项表
      * 仅更新实体对象中非null的字段
      *
      * @param record 规格选项表实体对象
      * @return 受影响的行数
      */
-    int updateByPrimaryKeySelective(SpecificationOption record);
+    void updateOption(@Param("record") List<SpecificationOption> record);
 
     /**
      * 根据主键更新规格选项表
@@ -61,5 +78,8 @@ public interface SpecificationOptionMapper {
      * @return 受影响的行数
      */
     int updateByPrimaryKey(SpecificationOption record);
+
+    void deleteBatch(@Param("ids") List<Long> ids);
+
 
 }

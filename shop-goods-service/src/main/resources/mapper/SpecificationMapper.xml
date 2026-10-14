@@ -12,6 +12,20 @@
     <sql id="Base_Column_List">
         id,spec_name
     </sql>
+
+    <!-- 分页查询操作 -->
+    <select id="selectList" parameterType="com.nanbei.vo.SpecificationVo" resultType="com.nanbei.pojo.Specification">
+        select
+        <include refid="Base_Column_List" />
+        from tb_specification
+        <where>
+            <if test="specName != null and specName != ''">
+                and spec_name like CONCAT('%',#{specName},'%')
+            </if>
+        </where>
+        order by id
+    </select>
+
     <!-- 查询操作 -->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -26,23 +40,12 @@
         where  id = #{id} 
     </delete>
     <!-- 插入操作 -->
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.nanbei.pojo.Specification" useGeneratedKeys="true">
+    <insert id="insertSpecification" keyColumn="id" keyProperty="id" parameterType="com.nanbei.pojo.Specification" useGeneratedKeys="true">
         insert into tb_specification
-        ( id,spec_name)
-        values (#{id},#{specName})
+        (spec_name)
+        values (#{specName})
     </insert>
-    <!-- 插入操作 -->
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.nanbei.pojo.Specification" useGeneratedKeys="true">
-        insert into tb_specification
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-                <if test="id != null">id,</if>
-                <if test="specName != null">spec_name,</if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-                <if test="id != null">#{id},</if>
-                <if test="specName != null">#{specName},</if>
-        </trim>
-    </insert>
+
     <!-- 更新操作 -->
     <update id="updateByPrimaryKeySelective" parameterType="com.nanbei.pojo.Specification">
         update tb_specification
@@ -60,4 +63,12 @@
             spec_name =  #{specName}
         where   id = #{id} 
     </update>
+
+    <!--    批量删除-->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from tb_specification where id in
+        <foreach item="id" collection="ids" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

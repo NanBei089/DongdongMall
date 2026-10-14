@@ -10,9 +10,9 @@ import lombok.Data;
 @Data
 public class PageQueryParams<T> {
 
-    private int pageNum=0;// 当前页码
+    private int pageNum=1;// 当前页码
 
-    private int pageSize=0;// 每页大小
+    private int pageSize=10;// 每页大小
 
     private T params;// 查询参数
 }

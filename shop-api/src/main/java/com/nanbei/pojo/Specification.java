@@ -21,4 +21,5 @@ public class Specification {
      * 名称
      */
     private String specName;
+
 }
