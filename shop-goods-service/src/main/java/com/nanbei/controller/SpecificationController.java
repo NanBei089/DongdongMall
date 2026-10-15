@@ -1,11 +1,11 @@
-package com.nanbei.goods.controller;
+package com.nanbei.controller;
 
-import com.nanbei.goods.service.SpecificationService;
+import com.nanbei.dto.SpecAndOptionDto;
+import com.nanbei.service.SpecificationService;
 import com.nanbei.page.PageList;
 import com.nanbei.page.PageQueryParams;
 import com.nanbei.pojo.SpecAndOption;
 import com.nanbei.result.Result;
-import com.nanbei.vo.SpecAndOptionVo;
 import com.nanbei.vo.SpecificationVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -82,8 +82,15 @@ public class SpecificationController {
      */
     @GetMapping("/detail/{id}")
     @Operation(summary = "回显数据")
-    public Result<SpecAndOptionVo> detail(@PathVariable("id") Long id) {
-        SpecAndOptionVo detail = specificationService.selectByPrimaryKey(id);
+    public Result<SpecAndOptionDto> detail(@PathVariable("id") Long id) {
+        SpecAndOptionDto detail = specificationService.selectByPrimaryKey(id);
         return Result.success(detail);
+    }
+
+    @GetMapping("/queryAll")
+    @Operation(summary = "查询所有规格")
+    public Result<List<SpecificationVo>> queryAll() {
+        List<SpecificationVo> specificationList = specificationService.queryAll();
+        return Result.success(specificationList);
     }
 }

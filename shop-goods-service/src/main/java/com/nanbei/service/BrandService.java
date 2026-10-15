@@ -1,4 +1,4 @@
-package com.nanbei.goods.service;
+package com.nanbei.service;
 
 import com.nanbei.page.PageList;
 import com.nanbei.page.PageQueryParams;
@@ -34,5 +34,8 @@ public interface BrandService {
      */
     PageList<BrandVo> selectBrandByPage(PageQueryParams<Brand> params);
 
-
+    /**
+     * 查询所有品牌
+     */
+    List<BrandVo> queryAll();
 }

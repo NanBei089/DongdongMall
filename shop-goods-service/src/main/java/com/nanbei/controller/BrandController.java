@@ -1,6 +1,6 @@
-package com.nanbei.goods.controller;
+package com.nanbei.controller;
 
-import com.nanbei.goods.service.BrandService;
+import com.nanbei.service.BrandService;
 import com.nanbei.page.PageList;
 import com.nanbei.page.PageQueryParams;
 import com.nanbei.pojo.Brand;
@@ -82,5 +82,12 @@ public class BrandController {
     public Result deleteBatch(@RequestBody List<Long> ids) {
         brandService.deleteBatchBrand(ids);
         return Result.success();
+    }
+
+    @Operation(summary = "查询所有品牌")
+    @GetMapping("/queryAll")
+    public Result<List<BrandVo>> queryAll() {
+        List<BrandVo> brandList = brandService.queryAll();
+        return Result.success(brandList);
     }
 }

@@ -1,9 +1,9 @@
-package com.nanbei.goods.service;
+package com.nanbei.service;
 
+import com.nanbei.dto.SpecAndOptionDto;
 import com.nanbei.page.PageList;
 import com.nanbei.page.PageQueryParams;
 import com.nanbei.pojo.SpecAndOption;
-import com.nanbei.vo.SpecAndOptionVo;
 import com.nanbei.vo.SpecificationVo;
 
 import java.util.List;
@@ -57,8 +57,8 @@ public interface SpecificationService {
      * @param id 主键ID
      * @return 规格及选项的详情，不存在时抛出异常
      */
-    SpecAndOptionVo selectByPrimaryKey(Long id);
+    SpecAndOptionDto selectByPrimaryKey(Long id);
 
 
-
+    List<SpecificationVo> queryAll();
 }

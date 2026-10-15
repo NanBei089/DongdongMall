@@ -1,23 +1,25 @@
-package com.nanbei.goods.service.Ipml;
+package com.nanbei.service.ipml;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nanbei.goods.mapper.SpecificationMapper;
-import com.nanbei.goods.mapper.SpecificationOptionMapper;
-import com.nanbei.goods.service.SpecificationService;
+import com.nanbei.dto.SpecAndOptionDto;
+import com.nanbei.enums.ExceptionEnum;
+import com.nanbei.exception.BusinessException;
+import com.nanbei.mapper.SpecificationMapper;
+import com.nanbei.mapper.SpecificationOptionMapper;
+import com.nanbei.service.SpecificationService;
 import com.nanbei.page.PageList;
 import com.nanbei.page.PageQueryParams;
 import com.nanbei.pojo.SpecAndOption;
 import com.nanbei.pojo.Specification;
 import com.nanbei.pojo.SpecificationOption;
-import com.nanbei.vo.SpecAndOptionVo;
 import com.nanbei.vo.SpecificationOptionVo;
 import com.nanbei.vo.SpecificationVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -91,6 +93,7 @@ public class SpecificationServiceImpl implements SpecificationService {
     @Override
     @Transactional
     public void insertSpecification(SpecAndOption record) {
+        validateSpecification(record);
         Specification specification = record.getSpecification();
         List<SpecificationOption> options = record.getSpecificationOption();
         //先插入规格，返回自增的id
@@ -116,6 +119,7 @@ public class SpecificationServiceImpl implements SpecificationService {
     @Override
     @Transactional
     public void updateSpecification(SpecAndOption record) {
+        validateSpecification(record);
         Specification specification = record.getSpecification();
         List<SpecificationOption> options = record.getSpecificationOption();
         Long specId = specification.getId();
@@ -137,7 +141,7 @@ public class SpecificationServiceImpl implements SpecificationService {
                 specificationOptionMapper.insertSelective(option);
             } else {
                 if (!deleteIds.remove(option.getId())) {
-                    throw new IllegalArgumentException("选项不存在、重复或不属于当前规格");
+                    throw new BusinessException("选项不存在、重复或不属于当前规格");
                 }
                 specificationOptionMapper.updateByPrimaryKey(option);
             }
@@ -157,7 +161,7 @@ public class SpecificationServiceImpl implements SpecificationService {
      * @return 用于回显的规格详情 VO
      */
     @Override
-    public SpecAndOptionVo selectByPrimaryKey(Long id) {
+    public SpecAndOptionDto selectByPrimaryKey(Long id) {
         //1.查询规格
         Specification specification = findSpecification(id);
         //2.查询规格选项
@@ -167,13 +171,56 @@ public class SpecificationServiceImpl implements SpecificationService {
         List<SpecificationOptionVo> optionVoList = options.stream().map(option ->
                 new SpecificationOptionVo(option.getId(), option.getOptionName(), option.getSpecId(), option.getOrders())
         ).toList();
-        return new SpecAndOptionVo(specificationVo, optionVoList);
+        return new SpecAndOptionDto(specificationVo, optionVoList);
     }
 
+    /**
+     * 查询所有规格
+     *
+     * @return 规格列表
+     */
+    @Override
+    public List<SpecificationVo> queryAll() {
+        List<Specification> specifications = specificationMapper.selectList(null);
+        return specifications.stream().map(specification ->
+                {
+                    SpecificationVo specificationVo = new SpecificationVo();
+                    BeanUtils.copyProperties(specification, specificationVo);
+                    return specificationVo;
+                }
+        ).toList();
+
+    }
+
+    private void validateSpecification(SpecAndOption record) {
+        if (record == null || record.getSpecification() == null) {
+            throw new BusinessException(ExceptionEnum.PARAM_ERROR.getCode(), "规格信息不能为空");
+        }
+        if (!StringUtils.hasText(record.getSpecification().getSpecName())) {
+            throw new BusinessException(ExceptionEnum.PARAM_ERROR.getCode(), "规格名称不能为空");
+        }
+        if (record.getSpecificationOption() == null) {
+            throw new BusinessException(ExceptionEnum.PARAM_ERROR.getCode(), "规格选项列表不能为空，无选项请传空数组");
+        }
+        for (SpecificationOption option : record.getSpecificationOption()) {
+            if (option == null || !StringUtils.hasText(option.getOptionName())) {
+                throw new BusinessException(ExceptionEnum.PARAM_ERROR.getCode(), "规格选项及选项名称不能为空");
+            }
+        }
+    }
+
+    /**
+     * 根据ID查询规格
+     * @param id
+     * @return
+     */
     private Specification findSpecification(Long id) {
+        if (id == null || id <= 0) {
+            throw new BusinessException(ExceptionEnum.PARAM_ERROR.getCode(), "规格 ID 必须为正整数");
+        }
         Specification specification = specificationMapper.selectByPrimaryKey(id);
         if (specification == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "规格不存在");
+            throw new BusinessException("规格不存在");
         }
         return specification;
     }

@@ -1,4 +1,4 @@
-package com.nanbei.goods.mapper;
+package com.nanbei.mapper;
 
 import com.nanbei.pojo.SpecificationOption;
 import org.apache.ibatis.annotations.Param;

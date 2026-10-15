@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nanbei.goods.mapper.SpecificationOptionMapper">
+<mapper namespace="com.nanbei.mapper.SpecificationOptionMapper">
 
     <resultMap id="BaseResultMap" type="com.nanbei.pojo.SpecificationOption">
             <id property="id" column="id" />

@@ -20,6 +20,12 @@
     <dependencies>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.nanbei</groupId>
             <artifactId>shop-common</artifactId>
             <version>${project.version}</version>

@@ -1,6 +1,9 @@
-package com.nanbei.goods.mapper;
+package com.nanbei.mapper;
 
 import com.nanbei.pojo.TypeTemplate;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 模板表数据库操作Mapper接口
@@ -13,12 +16,20 @@ import com.nanbei.pojo.TypeTemplate;
 public interface TypeTemplateMapper {
 
     /**
+     * 根据条件查询模板列表（配合PageHelper实现分页）
+     *
+     * @param typeTemplate 查询条件
+     * @return 模板列表
+     */
+    List<TypeTemplate> selectByPage(@Param("type") TypeTemplate typeTemplate);
+
+    /**
      * 根据主键删除模板表
      *
-     * @param id 主键ID
+     * @param ids 主键ID
      * @return 受影响的行数
      */
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(@Param("ids") List<Long> ids);
 
     /**
      * 新增模板表

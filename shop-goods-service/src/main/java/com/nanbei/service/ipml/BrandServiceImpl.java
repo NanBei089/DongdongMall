@@ -1,13 +1,14 @@
-package com.nanbei.goods.service.Ipml;
+package com.nanbei.service.ipml;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nanbei.goods.mapper.BrandMapper;
-import com.nanbei.goods.service.BrandService;
+import com.nanbei.mapper.BrandMapper;
+import com.nanbei.service.BrandService;
 import com.nanbei.page.PageList;
 import com.nanbei.page.PageQueryParams;
 import com.nanbei.pojo.Brand;
 import com.nanbei.vo.BrandVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,14 +68,8 @@ public class BrandServiceImpl implements BrandService {
      */
     @Override
     public PageList<BrandVo> selectBrandByPage(PageQueryParams<Brand> params) {
-        int pageNum = params.getPageNum();
-        int pageSize = params.getPageSize();
-        if (pageNum <= 0 || pageSize <= 0) {
-            pageNum = 1;
-            pageSize = 10;
-        }
         //1.设置分页参数
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(params.getPageNum(), params.getPageSize());
         //2.查询分页数据
         List<Brand> list = brandMapper.selectBrandByPage(params.getParams());
         //3.获取分页信息
@@ -88,5 +83,20 @@ public class BrandServiceImpl implements BrandService {
         ).toList();
 
         return new PageList<>(pageInfo.getTotal(), brandRows);
+    }
+
+    /**
+     * 查询所有品牌
+     */
+    @Override
+    public List<BrandVo> queryAll() {
+        List<Brand> brands = brandMapper.selectAllBrand();
+        return brands.stream().map(brand ->
+                {
+                    BrandVo brandVo = new BrandVo();
+                    BeanUtils.copyProperties(brand, brandVo);
+                    return brandVo;
+                }
+        ).toList();
     }
 }

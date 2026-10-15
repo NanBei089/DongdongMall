@@ -1,4 +1,4 @@
-package com.nanbei.goods.mapper;
+package com.nanbei.mapper;
 
 import com.nanbei.pojo.Brand;
 import org.apache.ibatis.annotations.Param;
@@ -41,4 +41,5 @@ public interface BrandMapper {
      * 分页查询品牌，条件为空时查询全部。
      */
     List<Brand> selectBrandByPage(@Param("brand") Brand brand);
+
 }

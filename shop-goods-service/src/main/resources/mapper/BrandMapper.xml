@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.nanbei.goods.mapper.BrandMapper">
+<mapper namespace="com.nanbei.mapper.BrandMapper">
     <resultMap id="brandResultMap" type="com.nanbei.pojo.Brand">
         <id property="brandId" column="id"/>
         <result property="brandName" column="name"/>
