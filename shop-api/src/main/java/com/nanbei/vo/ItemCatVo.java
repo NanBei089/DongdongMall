@@ -1,5 +1,6 @@
 package com.nanbei.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -32,5 +33,9 @@ public class ItemCatVo {
      */
     private Long typeId;
 
+    /**
+     * 子节点
+     */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ItemCatVo> children = new ArrayList<>();
 }
