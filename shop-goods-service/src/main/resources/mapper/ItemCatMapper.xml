@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nanbei.mapper.ItemCatMapper">
+
+    <!--tb_item_cat 数据库操作映射文件-->
+    <resultMap id="BaseResultMap" type="com.nanbei.pojo.ItemCat">
+
+            <id property="id" column="id" />
+
+            <result property="parentId" column="parent_id" />
+            <result property="name" column="name" />
+            <result property="typeId" column="type_id" />
+
+    </resultMap>
+
+
+    <!--基础查询字段列表-->
+    <sql id="Base_Column_List">
+        id,parent_id,name,type_id
+    </sql>
+
+
+
+
+    <!--根据主键ID查询对应的数据记录-->
+    <select id="selectByPrimaryKey"
+            parameterType="java.lang.Long"
+            resultMap="BaseResultMap">
+
+        select
+        <include refid="Base_Column_List" />
+
+        from tb_item_cat
+
+        where  id = #{id} 
+
+    </select>
+
+
+
+
+    <!--根据主键ID删除指定的数据记录-->
+    <delete id="deleteByPrimaryKey"
+            parameterType="java.lang.Long">
+
+        delete from tb_item_cat
+
+        where  id = #{id} 
+
+    </delete>
+
+
+
+    <!--
+        插入实体对象对应的全部字段
+        包括值为 null 的字段
+    -->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.nanbei.pojo.ItemCat" useGeneratedKeys="true">
+
+        insert into tb_item_cat
+
+        (
+        id,parent_id,name,type_id
+        )
+
+        values (
+        #{id},#{parentId},#{name},#{typeId}
+        )
+
+    </insert>
+
+
+    <!--
+        选择性新增商品类目
+        未提供的字段可以使用数据库设置的默认值
+    -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.nanbei.pojo.ItemCat" useGeneratedKeys="true">
+
+        insert into tb_item_cat
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">
+                    id,
+                </if>
+                <if test="parentId != null">
+                    parent_id,
+                </if>
+                <if test="name != null">
+                    name,
+                </if>
+                <if test="typeId != null">
+                    type_id,
+                </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">
+                    #{id},
+                </if>
+                <if test="parentId != null">
+                    #{parentId},
+                </if>
+                <if test="name != null">
+                    #{name},
+                </if>
+                <if test="typeId != null">
+                    #{typeId},
+                </if>
+        </trim>
+
+    </insert>
+
+
+    <!--根据主键选择性修改商品类目-->
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.nanbei.pojo.ItemCat">
+
+        update tb_item_cat
+
+        <set>
+                <if test="parentId != null">
+                    parent_id = #{parentId},
+                </if>
+                <if test="name != null">
+                    name = #{name},
+                </if>
+                <if test="typeId != null">
+                    type_id = #{typeId},
+                </if>
+        </set>
+
+        where  id = #{id} 
+
+    </update>
+
+
+    <!--根据主键修改商品类目-->
+    <update id="updateByPrimaryKey"
+            parameterType="com.nanbei.pojo.ItemCat">
+
+        update tb_item_cat
+
+        set 
+            parent_id = #{parentId},
+            name = #{name},
+            type_id = #{typeId}
+
+        where  id = #{id} 
+
+    </update>
+
+</mapper>
