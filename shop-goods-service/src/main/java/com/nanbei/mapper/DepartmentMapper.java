@@ -1,6 +1,9 @@
 package com.nanbei.mapper;
 
 import com.nanbei.pojo.Department;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * Department数据库操作Mapper接口
@@ -42,7 +45,7 @@ public interface DepartmentMapper {
      * @param record
      * @return
      */
-    Department selectBySelective(Department record);
+    List<Department> selectBySelective(Department record);
 
     /**
      * 根据主键选择性更新Department
@@ -61,4 +64,18 @@ public interface DepartmentMapper {
      */
     int updateByPrimaryKey(Department record);
 
+    /**
+     * 根据部门路径批量删除部门及其所有子部门
+     */
+    int deleteByDirPaths(@Param("paths") List<String> paths);
+
+    List<Department> selectByIds(@Param("ids") List<Long> ids);
+
+    Department selectByPrimaryKey(Long id);
+
+    // 批量更新后代部门路径
+    void updateChildrenPath(
+            @Param("oldPath") String oldPath,
+            @Param("newPath") String newPath
+    );
 }
