@@ -2,6 +2,8 @@ package com.nanbei.mapper;
 
 import com.nanbei.pojo.ItemCat;
 
+import java.util.List;
+
 /**
  * 商品类目数据库操作Mapper接口
  *
@@ -11,6 +13,9 @@ import com.nanbei.pojo.ItemCat;
  * @Entity com.nanbei.pojo.ItemCat
  */
 public interface ItemCatMapper {
+
+
+    List<ItemCat> selectAll();
 
     /**
      * 根据主键删除商品类目

@@ -36,7 +36,7 @@ spring:
             - id: shop-goods-service
               uri: lb://shop-goods-service # 路由的目标地址 lb就是负载均衡，后面跟服务名称
               predicates:
-                - Path=/brand/**,/specification/**,/typeTemplate/**
+                - Path=/brand/**,/specification/**,/typeTemplate/**,/itemCat/**
             - id: shop-goods-api-docs
               uri: lb://shop-goods-service
               predicates:

@@ -38,4 +38,5 @@ public class ItemCatVo {
      */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ItemCatVo> children = new ArrayList<>();
+
 }

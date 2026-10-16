@@ -2,6 +2,7 @@ package com.nanbei.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 商品类目
@@ -10,7 +11,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class ItemCat {
     /**
      * 类目ID

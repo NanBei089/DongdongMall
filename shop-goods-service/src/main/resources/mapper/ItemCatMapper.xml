@@ -9,20 +9,20 @@
     <resultMap id="BaseResultMap" type="com.nanbei.pojo.ItemCat">
 
             <id property="id" column="id" />
-
             <result property="parentId" column="parent_id" />
             <result property="name" column="name" />
             <result property="typeId" column="type_id" />
 
     </resultMap>
 
-
     <!--基础查询字段列表-->
     <sql id="Base_Column_List">
         id,parent_id,name,type_id
     </sql>
 
-
+    <select id="selectAll" resultType="com.nanbei.pojo.ItemCat">
+        select * from tb_item_cat
+    </select>
 
 
     <!--根据主键ID查询对应的数据记录-->

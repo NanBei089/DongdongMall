@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TypeTemplateVo {
     /**
-     * 
+     * 模板id
      */
     private Long id;
 
