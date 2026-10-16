@@ -115,3 +115,4 @@ target/
 .env
 .env.*
 **/application-dev.yml
+./AGENTS.md
