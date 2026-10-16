@@ -11,7 +11,6 @@ import com.nanbei.pojo.Department;
  * @Entity com.nanbei.pojo.Department
  */
 public interface DepartmentMapper {
-
     /**
      * 根据主键删除Department
      *
@@ -37,13 +36,13 @@ public interface DepartmentMapper {
      */
     int insertSelective(Department record);
 
+
     /**
-     * 根据主键查询Department
-     *
-     * @param id 主键ID
-     * @return Department实体对象，不存在时返回null
+     * 选择性查询
+     * @param record
+     * @return
      */
-    Department selectByPrimaryKey(Long id);
+    Department selectBySelective(Department record);
 
     /**
      * 根据主键选择性更新Department
