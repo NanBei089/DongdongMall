@@ -10,6 +10,10 @@ spring:
     gateway:
       server:
         webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true  # 开启服务发现自动路由
           globalcors: # 全局的跨域处理
             add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
             cors-configurations:
@@ -28,21 +32,18 @@ spring:
                 allow-credentials: true # 是否允许携带cookie
                 max-age: 360000 # 这次跨域检测的有效期
           # 是否和服务注册与发现组件结合，设置为 true 后可以直接使用应用名称调用服务
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true # 服务名称转成小写
-          routes:
-            - id: shop-goods-service
-              uri: lb://shop-goods-service # 路由的目标地址 lb就是负载均衡，后面跟服务名称
-              predicates:
-                - Path=/brand/**,/specification/**,/typeTemplate/**,/itemCat/**,/dept/**
-            - id: shop-goods-api-docs
-              uri: lb://shop-goods-service
-              predicates:
-                - Path=/shop-goods-service/v3/api-docs,/shop-goods-service/v3/api-docs/**
-              filters:
-                - StripPrefix=1
+
+#          routes:
+#            - id: shop-goods-service
+#              uri: lb://shop-goods-service # 路由的目标地址 lb就是负载均衡，后面跟服务名称
+#              predicates:
+#                - Path=/brand/**,/specification/**,/typeTemplate/**,/itemCat/**,/dept/**
+#            - id: shop-goods-api-docs
+#              uri: lb://shop-goods-service
+#              predicates:
+#                - Path=/shop-goods-service/v3/api-docs,/shop-goods-service/v3/api-docs/**
+#              filters:
+#                - StripPrefix=1
 
 springdoc:
   api-docs:
@@ -55,5 +56,11 @@ springdoc:
     urls:
       - name: 商品服务
         url: /shop-goods-service/v3/api-docs
+      - name: 运营商服务
+        url: /shop-operator-service/v3/api-docs
+      - name: 商家服务
+        url: /shop-seller-service/v3/api-docs
+      - name: 登录服务
+        url: /shop-sso-service/v3/api-docs
 
     urls-primary-name: 商品服务
