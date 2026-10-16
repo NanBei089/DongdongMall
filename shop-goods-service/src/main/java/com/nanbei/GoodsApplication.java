@@ -4,7 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.nanbei")
+@SpringBootApplication
 @MapperScan("com.nanbei.mapper")
 public class GoodsApplication {
 

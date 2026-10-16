@@ -17,6 +17,9 @@
         <module>gateway-service</module>
         <module>shop-api</module>
         <module>shop-common</module>
+        <module>shop-operator-service</module>
+        <module>shop-sso-service</module>
+        <module>shop-seller-service</module>
     </modules>
 
     <properties>
